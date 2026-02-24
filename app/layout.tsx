@@ -13,8 +13,8 @@ const bodyFont = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Promptify',
-  description: 'Promptify: tested prompts with notes, variations, and community submissions.',
+  title: 'laera.ia',
+  description: 'laera.ia: tested prompts with notes, variations, and community submissions.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

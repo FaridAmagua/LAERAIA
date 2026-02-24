@@ -19,7 +19,7 @@ export default async function LangHomePage({ params }: LangHomeProps) {
     <div className="space-y-10 pb-4">
       <section className="relative overflow-hidden rounded-3xl border border-cyan-400/20 bg-black px-5 py-8 shadow-[0_20px_60px_rgba(3,7,18,0.45)] md:px-8">
         <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-cyan-400/15 blur-3xl" />
-        <p className="text-sm uppercase tracking-[0.18em] text-cyan-300">Promptify</p>
+        <p className="text-sm uppercase tracking-[0.18em] text-cyan-300">laera.ia</p>
         <h1 className="mt-3 max-w-4xl font-heading text-2xl font-semibold leading-tight md:text-3xl">
           {locale === 'es' ? 'Donde las ideas se transforman en resultados con AI' : 'Where ideas turn into results with AI'}
         </h1>

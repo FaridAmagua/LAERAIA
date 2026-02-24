@@ -31,7 +31,7 @@ Optional:
 - `CLOUDINARY_CLOUD_NAME`
 - `CLOUDINARY_API_KEY`
 - `CLOUDINARY_API_SECRET`
-- `CLOUDINARY_BASE_FOLDER` (default: `promptify`)
+- `CLOUDINARY_BASE_FOLDER` (default: `laera-ia`)
 
 ## Database setup
 
