@@ -1,0 +1,33 @@
+export const moderationMockData = [
+  {
+    id: '1',
+    title: 'Escena de Ascensor with Osos de Peluche',
+    locale: 'es',
+    type: 'image',
+    source: 'community',
+    previewImageUrl: '/path/to/image.webp',
+    promptText: 'Some prompt description...',
+    status: 'pending',
+  },
+  {
+    id: '2',
+    title: 'Another test prompt',
+    locale: 'es',
+    type: 'image',
+    source: 'community',
+    previewImageUrl: '/path/to/image2.webp',
+    promptText: 'Another sample prompt...',
+    status: 'approved',
+  },
+  {
+    id: '3',
+    title: 'Video prompt example',
+    locale: 'es',
+    type: 'video',
+    source: 'official',
+    youtubeUrl: 'https://youtu.be/xxxxxxxxxxx',
+    previewImageUrl: 'https://img.youtube.com/vi/xxxxxxxxxxx/hqdefault.jpg',
+    promptText: 'Video prompt sample...',
+    status: 'approved',
+  },
+] as const

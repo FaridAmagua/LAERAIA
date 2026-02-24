@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Locale {
+  es
+  en
+}
+
+enum PromptType {
+  video
+  image
+  seo
+}
+
+enum PromptSource {
+  official
+  community
+}
+
+enum PromptStatus {
+  pending
+  approved
+  rejected
+}
+
+model Prompt {
+  id                    String       @id @default(cuid())
+  slug                  String       @unique
+  locale                Locale
+  type                  PromptType
+  title                 String
+  description           String?
+  promptText            String
+  category              String
+  collection            String       @default("general")
+  style                 String
+  mood                  String
+  duration              String
+  settingsJson          Json?
+  tags                  String[]
+  tool                  String?
+  previewImageUrl       String       @default("")
+  previewImageMasterUrl String       @default("")
+  previewImageCardUrl   String       @default("")
+  previewImageDetailUrl String       @default("")
+  previewFocusX         Int          @default(50)
+  previewFocusY         Int          @default(50)
+  previewScale          Int          @default(100)
+  youtubeUrl            String?
+  resultUrl             String?
+  source                PromptSource @default(community)
+  status                PromptStatus @default(pending)
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  votes                 Vote[]
+
+  @@index([locale, status, createdAt])
+  @@index([locale, type, status, createdAt])
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  promptId  String
+  voterHash String
+  createdAt DateTime @default(now())
+  prompt    Prompt   @relation(fields: [promptId], references: [id], onDelete: Cascade)
+
+  @@unique([promptId, voterHash])
+  @@index([promptId])
+}
