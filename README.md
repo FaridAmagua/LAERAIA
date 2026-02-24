@@ -161,6 +161,35 @@ For Netlify, use Cloudinary because Netlify filesystem is ephemeral.
    - submit a prompt with image
    - approve from `/admin/moderation`
 
+## Migrate old local images to Cloudinary
+
+If old prompts still reference `/uploads/...`, migrate them with this script.
+
+1. Keep old files available in local `uploads/` (or set `UPLOAD_ROOT` to that folder).
+2. Ensure env vars are set: `DATABASE_URL`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`.
+3. Dry run first:
+
+```bash
+npm run migrate:cloudinary:dry
+```
+
+4. Apply migration for approved images:
+
+```bash
+npm run migrate:cloudinary
+```
+
+5. Optional: also migrate pending images:
+
+```bash
+npm run migrate:cloudinary:all
+```
+
+Notes:
+- Script updates `previewImageUrl`, `previewImageMasterUrl`, `previewImageCardUrl`, `previewImageDetailUrl` in DB.
+- It skips already-remote URLs (`http/https`).
+- It never logs secrets.
+
 ## Existing API routes
 
 - `GET /api/prompts?locale=es&type=video&tag=seo&search=foo&page=1&pageSize=12`

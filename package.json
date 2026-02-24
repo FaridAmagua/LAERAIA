@@ -10,7 +10,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:seed": "node prisma/seed.mjs"
+    "prisma:seed": "node prisma/seed.mjs",
+    "migrate:cloudinary:dry": "node scripts/migrate-local-uploads-to-cloudinary.mjs",
+    "migrate:cloudinary": "node scripts/migrate-local-uploads-to-cloudinary.mjs --apply",
+    "migrate:cloudinary:all": "node scripts/migrate-local-uploads-to-cloudinary.mjs --apply --include-pending"
   },
   "keywords": [],
   "author": "",
