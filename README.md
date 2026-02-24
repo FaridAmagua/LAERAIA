@@ -150,6 +150,7 @@ For Netlify, use Cloudinary because Netlify filesystem is ephemeral.
 1. Add environment variables in Netlify:
    - `DATABASE_URL`
    - `ADMIN_TOKEN`
+   - `NEXT_PUBLIC_SITE_URL` (your Netlify public URL, never `localhost`)
    - `CLOUDINARY_CLOUD_NAME`
    - `CLOUDINARY_API_KEY`
    - `CLOUDINARY_API_SECRET`

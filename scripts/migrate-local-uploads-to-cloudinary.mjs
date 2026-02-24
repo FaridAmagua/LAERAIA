@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto'
 import { access, readFile } from 'node:fs/promises'
 import path from 'node:path'
 import process from 'node:process'
@@ -147,8 +146,7 @@ async function main() {
         continue
       }
 
-      const publicIdBase = publicIdFromUploadUrl(uploadUrl)
-      const publicId = `${publicIdBase}-${randomUUID().slice(0, 8)}`
+      const publicId = publicIdFromUploadUrl(uploadUrl)
 
       if (DRY_RUN) {
         const simulatedUrl = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}.webp`
