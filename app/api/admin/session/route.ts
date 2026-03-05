@@ -9,10 +9,12 @@ export async function POST(request: NextRequest) {
     return tooManyRequests(limit.retryAfter)
   }
 
-  const expected = process.env.ADMIN_TOKEN
+  const expectedToken = process.env.ADMIN_TOKEN
+  const expectedUser = process.env.ADMIN_USERNAME
+  const expectedPassword = process.env.ADMIN_PASSWORD
   const sessionValue = getAdminSessionValue()
 
-  if (!expected || !sessionValue) {
+  if ((!expectedToken && !(expectedUser && expectedPassword)) || !sessionValue) {
     return unauthorized()
   }
 
@@ -25,8 +27,13 @@ export async function POST(request: NextRequest) {
   }
 
   const token = typeof raw === 'object' && raw && 'token' in raw ? String((raw as { token: unknown }).token ?? '') : ''
+  const username = typeof raw === 'object' && raw && 'username' in raw ? String((raw as { username: unknown }).username ?? '') : ''
+  const password = typeof raw === 'object' && raw && 'password' in raw ? String((raw as { password: unknown }).password ?? '') : ''
 
-  if (token !== expected) {
+  const tokenValid = Boolean(expectedToken && token && token === expectedToken)
+  const userPassValid = Boolean(expectedUser && expectedPassword && username === expectedUser && password === expectedPassword)
+
+  if (!tokenValid && !userPassValid) {
     return unauthorized()
   }
 

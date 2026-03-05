@@ -1,29 +1,47 @@
 import { createHash } from 'node:crypto'
 import type { NextRequest } from 'next/server'
 
-function adminSessionHash(expectedToken: string): string {
-  return createHash('sha256').update(expectedToken).digest('hex')
+function adminSessionHash(secret: string): string {
+  return createHash('sha256').update(secret).digest('hex')
+}
+
+function getAdminSecret(): string | null {
+  const token = process.env.ADMIN_TOKEN
+  if (token) {
+    return token
+  }
+
+  const username = process.env.ADMIN_USERNAME
+  const password = process.env.ADMIN_PASSWORD
+  if (username && password) {
+    return `${username}:${password}`
+  }
+
+  return null
 }
 
 export function isAdminRequest(request: NextRequest): boolean {
-  const expected = process.env.ADMIN_TOKEN
-  if (!expected) {
+  const secret = getAdminSecret()
+  if (!secret) {
     return false
   }
 
+  const token = process.env.ADMIN_TOKEN
   const headerToken = request.headers.get('x-admin-token')
   const queryToken = request.nextUrl.searchParams.get('token')
   const cookieSession = request.cookies.get('admin_session')?.value
 
-  if (headerToken && headerToken === expected) {
-    return true
+  if (token) {
+    if (headerToken && headerToken === token) {
+      return true
+    }
+
+    if (queryToken && queryToken === token) {
+      return true
+    }
   }
 
-  if (queryToken && queryToken === expected) {
-    return true
-  }
-
-  if (cookieSession && cookieSession === adminSessionHash(expected)) {
+  if (cookieSession && cookieSession === adminSessionHash(secret)) {
     return true
   }
 
@@ -31,10 +49,10 @@ export function isAdminRequest(request: NextRequest): boolean {
 }
 
 export function getAdminSessionValue(): string | null {
-  const expected = process.env.ADMIN_TOKEN
-  if (!expected) {
+  const secret = getAdminSecret()
+  if (!secret) {
     return null
   }
 
-  return adminSessionHash(expected)
+  return adminSessionHash(secret)
 }
